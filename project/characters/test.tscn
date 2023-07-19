@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuu148s8b0y4g"]
+
+[ext_resource type="PackedScene" uid="uid://qeiw8ylgafo2" path="res://characters/main_character.tscn" id="1_qq66u"]
+[ext_resource type="PackedScene" uid="uid://bvuh6tttdslpa" path="res://characters/enemy_slime.tscn" id="2_h3vov"]
+[ext_resource type="Script" path="res://characters/hearts.gd" id="4_equ38"]
+[ext_resource type="PackedScene" uid="uid://bk5soqe2tr8k0" path="res://characters/turret_slime.tscn" id="4_g7if3"]
+[ext_resource type="PackedScene" uid="uid://bf2pkswfpqcl7" path="res://objects/chest.tscn" id="4_kn1eb"]
+[ext_resource type="Texture2D" uid="uid://h4lvw645utm8" path="res://assets/Icons/heart.png" id="5_xqp4g"]
+
+[node name="test" type="Node2D"]
+
+[node name="enemy" parent="." instance=ExtResource("2_h3vov")]
+position = Vector2(277, 149)
+
+[node name="main_character" parent="." instance=ExtResource("1_qq66u")]
+position = Vector2(111, 88)
+
+[node name="Turret" parent="." instance=ExtResource("4_g7if3")]
+position = Vector2(353, 71)
+up_direction = Vector2(0.998752, -0.0499376)
+
+[node name="Chest" parent="." instance=ExtResource("4_kn1eb")]
+position = Vector2(150, 45)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 1.0
+offset_top = -3.0
+offset_right = 30.0
+offset_bottom = 26.0
+texture = ExtResource("5_xqp4g")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="hearts_txt" type="Label" parent="CanvasLayer"]
+offset_left = 11.0
+offset_top = 2.0
+offset_right = 28.0
+offset_bottom = 25.0
+script = ExtResource("4_equ38")
+metadata/_edit_use_anchors_ = true
+
+[editable path="main_character"]

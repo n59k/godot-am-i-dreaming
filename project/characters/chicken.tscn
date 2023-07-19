@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://dy5xrbt2sroom"]
+
+[ext_resource type="Script" path="res://characters/chicken.gd" id="1_f700i"]
+[ext_resource type="Texture2D" uid="uid://1n038m057cie" path="res://assets/Animals/Clucking Chicken/CluckingChickenIdleSide.png" id="2_1t1df"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yerqk"]
+atlas = ExtResource("2_1t1df")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c85iy"]
+atlas = ExtResource("2_1t1df")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_midw5"]
+atlas = ExtResource("2_1t1df")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvpic"]
+atlas = ExtResource("2_1t1df")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oq6rc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yerqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c85iy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_midw5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvpic")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ung5s"]
+size = Vector2(7, 7)
+
+[node name="Chicken" type="CharacterBody2D"]
+position = Vector2(106, 52)
+script = ExtResource("1_f700i")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_oq6rc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_ung5s")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

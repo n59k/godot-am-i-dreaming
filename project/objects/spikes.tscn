@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://bxa1lsl7rs10m"]
+
+[ext_resource type="Script" path="res://objects/spikes.gd" id="1_0ms12"]
+[ext_resource type="Texture2D" uid="uid://cnyq8bproxde0" path="res://assets/Dungeon - Fantasy Dreamland/16x16/spr_free_dungeon.png" id="1_80nf2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_inrmy"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_npkd8"]
+atlas = ExtResource("1_80nf2")
+region = Rect2(176, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejlhu"]
+atlas = ExtResource("1_80nf2")
+region = Rect2(192, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6240"]
+atlas = ExtResource("1_80nf2")
+region = Rect2(208, 128, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpihk"]
+atlas = ExtResource("1_80nf2")
+region = Rect2(224, 128, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2cgho"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_npkd8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejlhu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6240")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpihk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[node name="Spikes" type="StaticBody2D"]
+collision_layer = 2
+script = ExtResource("1_0ms12")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_inrmy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2cgho")
+animation = &"idle"
+autoplay = "idle"

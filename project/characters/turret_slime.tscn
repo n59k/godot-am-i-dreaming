@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://bk5soqe2tr8k0"]
+
+[ext_resource type="Script" path="res://characters/turret_slime.gd" id="1_cclle"]
+[ext_resource type="Texture2D" uid="uid://bids73u1s4y2g" path="res://assets/Monsters/Animations/Acid Ooze/AcidOozeIdleSide.png" id="1_k1rhi"]
+[ext_resource type="AudioStream" uid="uid://yeic74nm2wi8" path="res://assets/Sounds/goblins/goblin-3.wav" id="3_al1aa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki6uo"]
+atlas = ExtResource("1_k1rhi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud5bh"]
+atlas = ExtResource("1_k1rhi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6o54"]
+atlas = ExtResource("1_k1rhi")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6qya"]
+atlas = ExtResource("1_k1rhi")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n8sst"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki6uo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ud5bh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6o54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6qya")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hehmk"]
+size = Vector2(13, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8y0yr"]
+size = Vector2(15, 14)
+
+[node name="Turret" type="CharacterBody2D"]
+texture_filter = 1
+position = Vector2(122, 72)
+up_direction = Vector2(0.998752, -0.0499376)
+script = ExtResource("1_cclle")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_n8sst")
+frame_progress = 0.750197
+flip_v = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_hehmk")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(193, 0)
+collision_mask = 32
+collide_with_areas = true
+
+[node name="ReloadTimer" type="Timer" parent="RayCast2D"]
+wait_time = 0.25
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_al1aa")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_8y0yr")
+
+[connection signal="timeout" from="RayCast2D/ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

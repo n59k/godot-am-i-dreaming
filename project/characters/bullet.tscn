@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdfvjh76yv1ax"]
+
+[ext_resource type="Script" path="res://characters/bullet.gd" id="1_p011p"]
+[ext_resource type="Texture2D" uid="uid://cnyq8bproxde0" path="res://assets/Dungeon - Fantasy Dreamland/16x16/spr_free_dungeon.png" id="2_w1ceh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ihb3"]
+radius = 4.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7r38w"]
+atlas = ExtResource("2_w1ceh")
+region = Rect2(448, 144, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wk7mb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7r38w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="bullet" type="Area2D" groups=["attack", "bullet"]]
+position = Vector2(36, 25)
+script = ExtResource("1_p011p")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["attack", "bullet"]]
+shape = SubResource("CircleShape2D_1ihb3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wk7mb")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-2.38419e-07, -2.38419e-07)
+scale = Vector2(0.4, 0.4)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

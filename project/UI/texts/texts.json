@@ -1,0 +1,20 @@
+{
+	"intro1": "Hey you, you're finally awake.",
+	"intro2" : "You look quite hungry, you should eat something in the kitchen!",
+	"intro_wall" : "You haven't finished your tasks yet!",
+	"food_eaten1" : "Well, you are now full, but look at all this mess around the house!",
+	"food_eaten2" : "You should clean in up, before you can continue.",
+	"lvl_progress" : "Uhhhhh, who is that near the cellar?!",
+	"outro1": "Heh? Where am I?",
+	"outro2" : "Teacher: Give me the exam, you had 5 extra minutes!",
+	"outro3" : "Sooo... all that was a dream?",
+	"outro4" : "Teacher: What are you talking about?",
+	"lvl2_dead" : "YOU HAVE DIED",
+	"lvl2_intro" : "Where that weird doggo went?",
+	"spikes1" : "Can't go through those spikes, they hella sharp!",
+	"lvl2_exit" : "I don't remember this door here...",
+	"lvl3_intro" : "Why is it so dark in here and the walls are so big!?!?",
+	"lvl3_info" : "I need to find the key and get out of here as fast as possible!",
+	"lvl3_key" : "Hurray, I have a key, let's get out of here!!!",
+	"lvl3_exit" : "That's the door, this way."
+}

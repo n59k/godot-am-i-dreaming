@@ -1,0 +1,172 @@
+[gd_scene load_steps=13 format=3 uid="uid://bvuh6tttdslpa"]
+
+[ext_resource type="Texture2D" uid="uid://mv2de3fbkryt" path="res://assets/Monsters/Animations/Death Slime/DeathSlimeIdleSide.png" id="1_306ck"]
+[ext_resource type="AudioStream" uid="uid://cdjw07mex7m6j" path="res://assets/Sounds/RPG Sound Pack/NPC/slime/slime6.wav" id="2_140iw"]
+
+[sub_resource type="GDScript" id="GDScript_kltfc"]
+script/source = "extends CharacterBody2D
+
+@export var speed : float = 50
+@export var max_health : float = 1
+var health : float = max_health
+var motion = Vector2.ZERO
+var player = null
+@onready var _animated_sprite = $AnimatedSprite2D
+@onready var _sound = $AudioStreamPlayer
+
+func _ready():
+	_animated_sprite.stop()
+	
+func _physics_process(delta):
+	motion = Vector2.ZERO
+	if player:
+		velocity = (position.direction_to(player.position)) * speed 
+		if _sound.is_playing() == false:
+			_sound.play()
+		move_and_slide()
+
+# Area entered
+func _on_area_2d_body_entered(body):
+	print(body)
+	if get_tree().has_group(\"Player\"):
+		if player != null:
+			return
+		player = get_tree().get_nodes_in_group(\"Player\")[0]	
+		if player != body:
+			player = null
+			return
+		_animated_sprite.play(\"walk\")
+	if body==self:
+		_animated_sprite.stop()
+
+# Area exited
+func _on_area_2d_body_exited(body):
+	if get_tree().has_group(\"Player\"):
+		player = get_tree().get_nodes_in_group(\"Player\")[0]	
+		if player == body:
+			player = null
+		_animated_sprite.stop()		
+
+func _on_hitbox_area_entered(area):
+	var new_target = null	
+#	if get_tree().has_group(\"Swing\"):
+	if area.is_in_group(\"Swing\"):
+		new_target = get_tree().get_nodes_in_group(\"Swing\")[0]	
+#		print(new_target)
+#		print(str(\"ahoj; \", new_target))
+		health -= 1
+		if health == 0:
+			_destroy()
+#		return new_target
+	return new_target	
+	
+func _destroy():
+	queue_free()
+
+#func _on_hitbox_area_exited(area):
+#	var new_target = null	
+#	if get_tree().has_group(\"Swing\"):
+#		new_target = get_tree().get_nodes_in_group(\"Swing\")[0]	
+##		print(new_target)
+#		print(str(\"ahoj; \", new_target))
+#		health -= 1
+#		if health == 0:
+#			_destroy()
+#	return new_target	
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oq5i1"]
+size = Vector2(14, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cks63"]
+atlas = ExtResource("1_306ck")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4n52x"]
+atlas = ExtResource("1_306ck")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejthg"]
+atlas = ExtResource("1_306ck")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fi5cx"]
+atlas = ExtResource("1_306ck")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cc0j"]
+atlas = ExtResource("1_306ck")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vt7fo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cks63")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4n52x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejthg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fi5cx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cc0j")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fe0al"]
+radius = 127.004
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l2h0f"]
+radius = 5.0
+height = 16.0
+
+[node name="enemy" type="CharacterBody2D"]
+texture_filter = 1
+position = Vector2(87, 48)
+script = SubResource("GDScript_kltfc")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_oq5i1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vt7fo")
+animation = &"idle"
+
+[node name="Area2D" type="Area2D" parent="." groups=["skip"]]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_fe0al")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_140iw")
+
+[node name="Hitbox" type="Area2D" parent="." groups=["attack"]]
+collision_layer = 17
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" groups=["attack"]]
+position = Vector2(0, 3)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_l2h0f")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_exited" from="Hitbox" to="." method="_on_hitbox_area_exited"]

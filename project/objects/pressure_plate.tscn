@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtp4w12sfdlai"]
+
+[ext_resource type="Script" path="res://objects/pressure_plate.gd" id="1_cnwa8"]
+[ext_resource type="Texture2D" uid="uid://dlsl7wo8bbccn" path="res://assets/cellar/16x16/Cellar_B.png" id="1_s4vg3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bml42"]
+size = Vector2(16, 16)
+
+[node name="Pressure plate" type="Area2D"]
+position = Vector2(3, 1)
+collision_layer = 8
+script = ExtResource("1_cnwa8")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bml42")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_s4vg3")
+hframes = 16
+vframes = 16
+frame = 159
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://b4kdpyglguk50"]
+
+[ext_resource type="Texture2D" uid="uid://ctcs8mvjx1w7m" path="res://assets/Super_Retro_World_Interior_pack_week42/animation/fire2.png" id="1_86g6p"]
+[ext_resource type="Texture2D" uid="uid://5j3igky5efo7" path="res://assets/lights/2d_lights_and_shadows_neutral_point_light.webp" id="2_s5ol7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5q1m"]
+atlas = ExtResource("1_86g6p")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvq7i"]
+atlas = ExtResource("1_86g6p")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3fut"]
+atlas = ExtResource("1_86g6p")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqdh8"]
+atlas = ExtResource("1_86g6p")
+region = Rect2(48, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alfd8"]
+atlas = ExtResource("1_86g6p")
+region = Rect2(64, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6i8qe"]
+atlas = ExtResource("1_86g6p")
+region = Rect2(80, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_87xnd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j5q1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvq7i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3fut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqdh8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_alfd8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6i8qe")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Fire" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_87xnd")
+animation = &"idle"
+autoplay = "idle"
+frame = 5
+frame_progress = 0.957334
+offset = Vector2(0, -16)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+scale = Vector2(0.3, 0.3)
+color = Color(0.611765, 0.435294, 0.0627451, 1)
+energy = 2.0
+texture = ExtResource("2_s5ol7")
